@@ -12,10 +12,10 @@ class Post extends Model
         'user_id',
     ];
 
-   /* public function user()
+    public function user()
     {
         //User::class == 'App\User'
         return $this->belongsTo(User::class);
-    }*/
+    }
     
 }
