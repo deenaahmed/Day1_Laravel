@@ -6,6 +6,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostsController extends Controller
 {
@@ -30,19 +31,42 @@ class PostsController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        // dd($request->all());
-        Post::create([
+		/*$usersall = User::all();
+		$flag=0;
+		foreach ($usersall as $user)	{	
+		if($request->user_id==$user->id){
+			$flag=1;
+		}
+        }
+		if($flag==1)
+		{
+			 Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id
         ]);
-		
-        
+		}
+		else
+		{
+			dd("hack detected");
+		}*/
+		$founduser=User::where('id',$request->user_id) -> first();
+		if($founduser){
+			 Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id
+        ]);
+		}
+		else
+		{
+			dd("hack detected");
+		}
        return redirect(route('posts.index')); 
     }
 	public function edit($id)
     {
-		$users = User::all();
+				$users = User::all();
 		$posts = Post::where('id', '=', $id)->first();
 		return view('posts.update',[
             'posts' => $posts,
@@ -51,16 +75,27 @@ class PostsController extends Controller
     }
 	
 
-	public function update(Request $request)
+	public function update(UpdatePostRequest $request)
     {	
-	    $posts = Post::where('id', '=', $request->id)->update([
+		$postold = Post::where('id', '=', $request->id)->first();
+		$usersall = User::all();
+		$flag=0;
+		foreach ($usersall as $user)	{	
+		if($request->user_id==$user->id){
+			$flag=1;
+		}
+		}
+		if($flag==1){
+			 $posts = Post::where('id', '=', $request->id)->update([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id
         ]);
-		
-		//Post->update($request->all(), $request->id);
-        
+		}
+		else
+		{
+			dd("hack detected");
+		}
        return redirect(route('posts.index')); 
     }
 	public function show(Request $request)
