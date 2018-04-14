@@ -18,7 +18,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers;  //awl ma ala2y ay 7aga feha use l class da tb2a trait
 
     /**
      * Where to redirect users after login.

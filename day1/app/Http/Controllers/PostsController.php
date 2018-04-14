@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use App\User;
+use App\Http\Requests\StorePostRequest;
 
 class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
-        $post = $posts->first();
-
+		
+        $posts = Post::paginate(1);
         return view('posts.index',[
 
             'posts' => $posts
@@ -28,7 +28,7 @@ class PostsController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
         // dd($request->all());
         Post::create([
@@ -36,7 +36,46 @@ class PostsController extends Controller
             'description' => $request->description,
             'user_id' => $request->user_id
         ]);
+		
         
        return redirect(route('posts.index')); 
+    }
+	public function edit($id)
+    {
+		$users = User::all();
+		$posts = Post::where('id', '=', $id)->first();
+		return view('posts.update',[
+            'posts' => $posts,
+			'users' => $users
+        ]);
+    }
+	
+
+	public function update(Request $request)
+    {	
+	    $posts = Post::where('id', '=', $request->id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id
+        ]);
+		
+		//Post->update($request->all(), $request->id);
+        
+       return redirect(route('posts.index')); 
+    }
+	public function show(Request $request)
+    {
+
+        $posts = Post::where('id', $request->id)->first();
+		$users = User::where('id', $posts->user_id)->first();
+        return view('posts.show',[
+            'posts' => $posts,
+			'users' => $users
+        ]);
+    }
+	public function delete(Request $request)
+    {
+        $posts = Post::where('id', $request->id)->delete();
+        return redirect(route('posts.index')); 
     }
 }

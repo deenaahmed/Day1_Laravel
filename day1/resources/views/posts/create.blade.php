@@ -2,13 +2,21 @@
 
 
 @section('content')
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <form method="post" action="/posts">
 {{csrf_field()}}
-Title :- <input type="text" name="title">
+Title :- <input type="text" name="title" value="Post Title">
 <br><br>
 Description :- 
-<textarea name="description"></textarea>
+<textarea name="description" value="Post Description"></textarea>
 <br>
 <br>
 Post Creator
