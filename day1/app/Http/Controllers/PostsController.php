@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+
 
 class PostsController extends Controller
 {
@@ -52,6 +54,7 @@ class PostsController extends Controller
 		}*/
 		//$founduser=User::where('id',$request->user_id) -> first();
 		//if($founduser){
+
 			 Post::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -77,25 +80,27 @@ class PostsController extends Controller
 
 	public function update(UpdatePostRequest $request)
     {	
-		$postold = Post::where('id', '=', $request->id)->first();
-		$usersall = User::all();
-		$flag=0;
-		foreach ($usersall as $user)	{	
+		//$postold = Post::where('id', '=', $request->id)->first();
+		//$usersall = User::all();
+		//$flag=0;
+		$slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+		/*foreach ($usersall as $user)	{	
 		if($request->user_id==$user->id){
 			$flag=1;
 		}
-		}
-		if($flag==1){
+		}*/
+		//if($flag==1){
 			 $posts = Post::where('id', '=', $request->id)->update([
             'title' => $request->title,
             'description' => $request->description,
-            'user_id' => $request->user_id
+            'user_id' => $request->user_id,
+			'slug' => $slug
         ]);
-		}
-		else
-		{
-			dd("hack detected");
-		}
+		//}
+		//else
+		//{
+		//	dd("hack detected");
+		//}
        return redirect(route('posts.index')); 
     }
 	public function show(Request $request)
