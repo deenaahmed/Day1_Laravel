@@ -50,18 +50,18 @@ class PostsController extends Controller
 		{
 			dd("hack detected");
 		}*/
-		$founduser=User::where('id',$request->user_id) -> first();
-		if($founduser){
+		//$founduser=User::where('id',$request->user_id) -> first();
+		//if($founduser){
 			 Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id
         ]);
-		}
-		else
-		{
-			dd("hack detected");
-		}
+		//}
+		//else
+		//{
+		//	dd("hack detected");
+		//}
        return redirect(route('posts.index')); 
     }
 	public function edit($id)

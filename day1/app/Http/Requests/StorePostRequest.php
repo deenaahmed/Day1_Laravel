@@ -30,4 +30,6 @@ class StorePostRequest extends FormRequest
 		'description'=>'min:10|required'
         ];
     }
+	//	'id' => 'exists:users.user_id'
 }
+ 

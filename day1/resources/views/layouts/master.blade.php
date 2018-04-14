@@ -8,22 +8,10 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
-<!-- As a heading -->
-<nav class="navbar navbar-dark bg-primary">
-  <a class="navbar-brand" href="/posts">Home</a>
- 
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-</nav>
-
-
+@extends('layouts.app')
 </head>
 <body>
 
-@yield('content')
 
 </body>
 
