@@ -26,6 +26,7 @@ Post Creator
 @endforeach
 
 </select>
+<input class="form-control filestyle margin images" id="photo" name="photo" data-input="false" type="file" data-buttonText="Upload Logo" data-size="sm" data-badge="false" />
 <br>
 <input type="submit" value="Submit" class="btn btn-primary">
 </form>

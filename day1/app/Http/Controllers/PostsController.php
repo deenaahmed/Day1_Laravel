@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Http\File;
 use App\User;
 use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Storage;
 
 
 class PostsController extends Controller
@@ -33,43 +34,28 @@ class PostsController extends Controller
 
     public function store(StorePostRequest $request)
     {
-		/*$usersall = User::all();
-		$flag=0;
-		foreach ($usersall as $user)	{	
-		if($request->user_id==$user->id){
-			$flag=1;
-		}
-        }
-		if($flag==1)
-		{
-			 Post::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'user_id' => $request->user_id
-        ]);
-		}
-		else
-		{
-			dd("hack detected");
-		}*/
-		//$founduser=User::where('id',$request->user_id) -> first();
-		//if($founduser){
+		/*$path = Storage::putFileAs(
+			'photo', $request->file('photo'), 'photo.jpg'
+		);*/
+			//Storage::putFile('photo',  $request->file('photo'), 'photo.jpg');
+			//dd("gg");
+            //$image = Input::file('photo');
+            //$filename = time() . '.' . $image->getClientOriginalExtension();
+            //$path = public_path('images/' . $filename);
+			//Image::make($image->getRealPath())->resize(200, 200)->save($path);
+			Storage::putFile('photo', new File('/path/to/photo'));
+			Post::create([
+				'title' => $request->title,
+				'description' => $request->description,
+				'user_id' => $request->user_id,
+				'photo' => $request->photo
+			]);
 
-			 Post::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'user_id' => $request->user_id
-        ]);
-		//}
-		//else
-		//{
-		//	dd("hack detected");
-		//}
        return redirect(route('posts.index')); 
     }
 	public function edit($id)
     {
-				$users = User::all();
+		$users = User::all();
 		$posts = Post::where('id', '=', $id)->first();
 		return view('posts.update',[
             'posts' => $posts,
@@ -80,27 +66,12 @@ class PostsController extends Controller
 
 	public function update(UpdatePostRequest $request)
     {	
-		//$postold = Post::where('id', '=', $request->id)->first();
-		//$usersall = User::all();
-		//$flag=0;
-		$slug = SlugService::createSlug(Post::class, 'slug', $request->title);
-		/*foreach ($usersall as $user)	{	
-		if($request->user_id==$user->id){
-			$flag=1;
-		}
-		}*/
-		//if($flag==1){
 			 $posts = Post::where('id', '=', $request->id)->update([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id,
 			'slug' => $slug
         ]);
-		//}
-		//else
-		//{
-		//	dd("hack detected");
-		//}
        return redirect(route('posts.index')); 
     }
 	public function show(Request $request)
