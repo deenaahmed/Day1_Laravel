@@ -43,12 +43,22 @@ class PostsController extends Controller
             //$filename = time() . '.' . $image->getClientOriginalExtension();
             //$path = public_path('images/' . $filename);
 			//Image::make($image->getRealPath())->resize(200, 200)->save($path);
-			Storage::putFile('photo', new File('/path/to/photo'));
+			//Storage::put('file.jpg', $request->photo);
+			//Storage::putFile('photo', new File('/path/to/photo'));
+			// $file     = request()->file('photo');
+        	// $fileName = rand(1, 999) . $file->getClientOriginalName();
+        	// $filePath = "../images/" . date("Y") . '/' . date("m") . "/" . $fileName;
+        	// $file->storeAs('images/'. date("Y") . '/' . date("m") . '/', $fileName, 'uploads'); 
+			// dd(File::create(['file_name' => $fileName, 'path' => $filePath, 'file_extension' => $file->getClientOriginalExtension()]));
+			//$path = $request->file('photo')->store('/images');
+			$path = Storage::putFile('avatars', $request->file('photo'));
+			Storage::setVisibility($path, 'public');
+			//Storage::put('file.jpg', $path, 'public');
 			Post::create([
 				'title' => $request->title,
 				'description' => $request->description,
 				'user_id' => $request->user_id,
-				'photo' => $request->photo
+				'photo' => $path
 			]);
 
        return redirect(route('posts.index')); 
@@ -76,12 +86,13 @@ class PostsController extends Controller
     }
 	public function show(Request $request)
     {
-
-        $posts = Post::where('id', $request->id)->first();
+		$posts = Post::where('id', $request->id)->first();
+		$contents = Storage::get('~/home/deena/Desktop/Day1_Laravel/day1/storage/app/'.$posts->photo);
 		$users = User::where('id', $posts->user_id)->first();
         return view('posts.show',[
             'posts' => $posts,
-			'users' => $users
+			'users' => $users,
+			'content' => $contents
         ]);
     }
 	public function delete(Request $request)

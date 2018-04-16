@@ -11,7 +11,7 @@
         </ul>
     </div>
 @endif
-<form method="post" action="/posts">
+<form method="post" action="/posts" enctype="multipart/form-data">
 {{csrf_field()}}
 Title :- <input type="text" name="title" value="Post Title">
 <br><br>
@@ -26,8 +26,7 @@ Post Creator
 @endforeach
 
 </select>
-<input class="form-control filestyle margin images" id="photo" name="photo" data-input="false" type="file" data-buttonText="Upload Logo" data-size="sm" data-badge="false" />
-<br>
+<input  type="file"  name="photo"  >
 <input type="submit" value="Submit" class="btn btn-primary">
 </form>
 

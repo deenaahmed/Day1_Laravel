@@ -15,7 +15,7 @@
 
 <br>
 <br>
-
+<img src=$contents></img>
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">Post info</h5>
