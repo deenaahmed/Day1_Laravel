@@ -39,6 +39,44 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+    public function register(Request $request)
+    {
+        $requestData = $request->all();
+
+        $data = $this->registerMethod($requestData);
+
+        if ($result = $this->validator($data)) {
+            return $result;
+        }
+
+        event(new Registered($user = $this->create($data)));
+
+        return response()->json([
+            'data' => [
+                'message' => 'Register success!'
+            ],
+        ]);
+    }
+
+    /**
+     * Check register method: (phone or email) or username
+     * @param $data
+     * @return mixed
+     */
+    protected function registerMethod($data)
+    {
+        if (empty($data['username'])) {
+            $data['phone'] = empty($data['phone']) ? null : clear_phone($data['phone']);
+        } else {
+            $username = $data['username'];
+            if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                $data['email'] = $username;
+            } else {
+                $data['phone'] = clear_phone($username); //TODO: add check valid Phone
+            }
+        }
+        return $data;
+    }
 
     /**
      * Get a validator for an incoming registration request.

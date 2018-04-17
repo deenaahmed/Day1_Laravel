@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -33,6 +34,11 @@ return [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
+    ],
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID','Iv1.3ba7fd34bec03a11'),         // Your FACEBOOK Client ID
+        'client_secret' => env('GITHUB_CLIENT_SECRET','32e3880c93a75f11806df3e27e8df0fc642f8449'), // Your FACEBOOK Client Secret
+        'redirect' => 'http://testing.local/login/github/callback',
     ],
 
 ];
