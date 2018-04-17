@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -27,6 +28,34 @@ class LoginController extends Controller
      * @var string
      */
     //protected $redirectTo = '/home';
+    public function findOrCreate(ProviderUser $providerUser, $provider)
+    {
+        $account = LinkedSocialAccount::where('provider_name', $provider)
+                   ->where('provider_id', $providerUser->getId())
+                   ->first();
+
+        if ($account) {
+            return $account->user;
+        } else {
+
+        $user = User::where('email', $providerUser->getEmail())->first();
+
+        if (! $user) {
+            $user = User::create([  
+                'email' => $providerUser->getEmail(),
+                'name'  => $providerUser->getName(),
+            ]);
+        }
+
+        $user->accounts()->create([
+            'provider_id'   => $providerUser->getId(),
+            'provider_name' => $provider,
+        ]);
+
+        return $user;
+
+        }
+    }
 
     public function redirectToProvider()
     {
@@ -35,7 +64,26 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('github')->user();
-        dd($user);
+        //dd($user);
+        // $provider = 'GitHub';
+        // try {
+        //     //$user = \Socialite::with($provider)->user();
+        //     $user = Socialite::driver('github')->user();
+        // } catch (\Exception $e) {
+        //     dd('hna ');
+        //     return redirect('/login');
+       // }
+
+        // $authUser = $accountService->findOrCreate(
+        //     $user,
+        //     $provider
+        // );
+
+        //auth()->login($user, true);
+        //dd($user->id);
+        Auth::loginUsingId($user->id, true);
+
+        return redirect('/posts');
     }
 
     /**

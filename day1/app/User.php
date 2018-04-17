@@ -15,6 +15,9 @@ class User extends Authenticatable
     {
         return $this->orWhere('email', $identifier)->orWhere('name', $identifier)->first();
     }
+    // public function accounts(){
+    //     return $this->hasMany('App\LinkedSocialAccount');
+    // }
 
     /**
      * The attributes that are mass assignable.

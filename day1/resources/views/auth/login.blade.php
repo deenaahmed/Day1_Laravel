@@ -6,7 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -58,9 +57,12 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
+                                
                             </div>
                         </div>
+                        <a href="/login/github"  class="btn btn-default btn-md">Log in with Github</a>
                     </form>
+
                 </div>
             </div>
         </div>

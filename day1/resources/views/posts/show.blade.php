@@ -15,7 +15,7 @@
 
 <br>
 <br>
-<img src=$contents></img>
+<img src=" {{URL::asset('/storage/'.$posts['photo'])}}"></img>
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">Post info</h5>
