@@ -12,7 +12,7 @@
     </div>
 @endif
 
-<form  action="/posts/{{$posts->user_id}}" method="Post">
+<form  action="/posts/{{$posts->user_id}}" method="Post" enctype="multipart/form-data">
 <?php echo method_field('PUT'); ?>
 {{csrf_field()}}
 <input type="hidden" name="id" value="{{$posts->id}}" >
@@ -34,6 +34,8 @@ Post Creator
 
 </select>
 <br>
+<img src=" {{URL::asset('/storage/'.$posts['photo'])}}"></img>
+<input  type="file"  name="photo" value="{{$posts->photo}}" >
 <input type="submit" value="Update" class="btn btn-primary">
 </form>
 

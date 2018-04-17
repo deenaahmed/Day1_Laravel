@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use App\User;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,7 +49,10 @@ class PostsController extends Controller
 	public function edit($id)
     {
 		$users = User::all();
-		$posts = Post::where('id', '=', $id)->first();
+        $posts = Post::where('id', '=', $id)->first();
+        if(!$posts->photo){
+            $posts->photo='/avatars/index.png';
+        }
 		return view('posts.update',[
             'posts' => $posts,
 			'users' => $users
@@ -58,17 +62,27 @@ class PostsController extends Controller
 
 	public function update(UpdatePostRequest $request)
     {	
+        //
+        if(!$request->file('photo')){
+            $request->photo='index.png';
+        }
+        //dd($request->photo);
+        $path = Storage::putFile('avatars', $request->file('photo'));
+        Storage::setVisibility($path, 'public');
 			 $posts = Post::where('id', '=', $request->id)->update([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id,
-			'slug' => $slug
+            'photo' => $path
         ]);
        return redirect(route('posts.index')); 
     }
 	public function show(Request $request)
     {
-		$posts = Post::where('id', $request->id)->first();
+        $posts = Post::where('id', $request->id)->first();
+        if(!$posts->photo){
+            $posts->photo='/avatars/index.png';
+        }
 		$users = User::where('id', $posts->user_id)->first();
         return view('posts.show',[
             'posts' => $posts,
