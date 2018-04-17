@@ -21,6 +21,7 @@ Route::get(
 ->middleware('auth');
 Route::get('posts/create','PostsController@create');
 Route::post('posts','PostsController@store');
+Route::post('posts/{id}','PostsController@storecomment');
 Route::get('posts/{id}/edit','PostsController@edit');
 Route::put('posts/{id}','PostsController@update');
 Route::get('posts/{id}','PostsController@show');

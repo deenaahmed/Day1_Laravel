@@ -24,5 +24,17 @@
 	<p class="card-text"> Post Creation: {{\Carbon\Carbon::parse($posts->created_at)->format('l  \\of F Y h:i:s A')}}</p>
   </div>
 </div>
+<div class="card" style="width: 18rem;">
+<form method="post" action="/posts/{{$posts['id']}}">
+{{csrf_field()}}
+<input name="body" type="text" placeholder="Leave your comment">
+<input type="submit" value="Comment" class="btn btn-primary">
+</form>
+@foreach ($posts->comments as $comment)
+    <p>
+        {{ $comment->body }}
+    </p>
+@endforeach
+</div>
 
 @endsection

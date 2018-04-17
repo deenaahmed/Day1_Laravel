@@ -10,6 +10,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 
 class PostsController extends Controller
@@ -33,10 +34,21 @@ class PostsController extends Controller
         ]);
     }
 
+    public function storecomment(Request $request)
+    {
+
+        $post = Post::find($request->id);
+        $body = $request->body; // Get comment provided by user
+            $user = Auth::user();             // Get posting user
+            // Create comment
+            $post->addComment($body, $user);
+            return redirect('/posts/'.$request->id); 
+    }
+
     public function store(StorePostRequest $request)
     {
 			$path = Storage::putFile('avatars', $request->file('photo'));
-			Storage::setVisibility($path, 'public');
+            Storage::setVisibility($path, 'public');
 			Post::create([
 				'title' => $request->title,
 				'description' => $request->description,
