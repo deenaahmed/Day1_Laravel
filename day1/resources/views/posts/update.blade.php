@@ -34,8 +34,7 @@ Post Creator
 
 </select>
 <br>
-<img src=" {{URL::asset('/storage/'.$posts['photo'])}}"></img>
-<input  type="file"  name="photo" value="{{$posts->photo}}" >
+<input  type="file"  name="photo" >
 <input type="submit" value="Update" class="btn btn-primary">
 </form>
 

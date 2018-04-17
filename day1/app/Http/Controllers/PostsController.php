@@ -62,19 +62,26 @@ class PostsController extends Controller
 
 	public function update(UpdatePostRequest $request)
     {	
-        //
-        if(!$request->file('photo')){
-            $request->photo='index.png';
-        }
-        //dd($request->photo);
-        $path = Storage::putFile('avatars', $request->file('photo'));
-        Storage::setVisibility($path, 'public');
-			 $posts = Post::where('id', '=', $request->id)->update([
+        $posts = Post::where('id', $request->id)->first();
+        if($request->file('photo')==null){
+			 $posts->update([
             'title' => $request->title,
             'description' => $request->description,
-            'user_id' => $request->user_id,
-            'photo' => $path
+            'user_id' => $request->user_id
         ]);
+        }
+        else{
+            Storage::delete($posts->photo);
+            $path = Storage::putFile('avatars', $request->file('photo'));
+             Storage::setVisibility($path, 'public');
+                 $posts->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'user_id' => $request->user_id,
+                'photo' => $path
+            ]);
+        }
+        
        return redirect(route('posts.index')); 
     }
 	public function show(Request $request)
@@ -91,6 +98,8 @@ class PostsController extends Controller
     }
 	public function delete(Request $request)
     {
+        $posts = Post::where('id', $request->id)->first();
+        Storage::delete($posts->photo);
         $posts = Post::where('id', $request->id)->delete();
         return redirect(route('posts.index')); 
     }
