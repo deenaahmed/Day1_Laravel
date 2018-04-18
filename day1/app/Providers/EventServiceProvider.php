@@ -13,10 +13,15 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            'SocialiteProviders\Deezer\DeezerExtendSocialite@handle',
         ],
     ];
+    // protected $listen = [
+    //     'App\Events\Event' => [
+    //         'App\Listeners\EventListener',
+    //     ],
+    // ];
 
     /**
      * Register any events for your application.

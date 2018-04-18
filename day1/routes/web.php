@@ -30,7 +30,7 @@ Route::delete('posts/{id}','PostsController@delete');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('login/github', 'Auth\LoginController@redirectToProvider');
-Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
-//Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider');
-//Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback');
+// Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+// Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider');
+Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback');

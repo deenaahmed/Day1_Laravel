@@ -13,6 +13,9 @@ class User extends Authenticatable
     use CommentableTrait;
     use HasApiTokens, Notifiable;
 
+    public function accounts(){
+        return $this->hasMany('App\LinkedSocialAccount');
+    }
     public function findForPassport($identifier)
     {
         return $this->orWhere('email', $identifier)->orWhere('name', $identifier)->first();
