@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use App\User;
@@ -52,8 +53,10 @@ class PostsController extends Controller
 				'title' => $request->title,
 				'description' => $request->description,
 				'user_id' => $request->user_id,
-				'photo' => $path
-			]);
+                'photo' => $path,
+            ]);
+            $post = Post::where('title', '=', $request->title)->first();
+            $tags = $post->tag($request->tag_body);
 
        return redirect(route('posts.index')); 
     }
@@ -98,13 +101,15 @@ class PostsController extends Controller
 	public function show(Request $request)
     {
         $posts = Post::where('id', $request->id)->first();
+        $tags = $posts->tags();
         if(!$posts->photo){
             $posts->photo='/avatars/index.png';
         }
 		$users = User::where('id', $posts->user_id)->first();
         return view('posts.show',[
             'posts' => $posts,
-			'users' => $users
+            'users' => $users,
+            'tags' => $tags,
         ]);
     }
 	public function delete(Request $request)

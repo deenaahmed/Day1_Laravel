@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca32ea73c4680496021a9f4207f71053",
+    "content-hash": "c0acf21f2798d6976660a190a79875ee",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1886,6 +1886,66 @@
                 "server"
             ],
             "time": "2018-02-18T15:57:10+00:00"
+        },
+        {
+            "name": "lecturize/laravel-tags",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Lecturize/Laravel-Tags.git",
+                "reference": "b39f7d86f4a6b778fa59afddf012c0c08285bfaf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Lecturize/Laravel-Tags/zipball/b39f7d86f4a6b778fa59afddf012c0c08285bfaf",
+                "reference": "b39f7d86f4a6b778fa59afddf012c0c08285bfaf",
+                "shasum": ""
+            },
+            "require": {
+                "cviebrock/eloquent-sluggable": "^4.1.0",
+                "illuminate/database": ">=5.3",
+                "illuminate/support": ">=5.3",
+                "php": ">=5.6.4|^7.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": "2.5.x",
+                "laravel/framework": "5.3.*",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lecturize\\Tags\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Manfred Poellmann",
+                    "homepage": "http://twitter.com/AMPoellmann",
+                    "role": "developer"
+                }
+            ],
+            "description": "Simple way to tag Eloquent models in Laravel 5.",
+            "homepage": "https://github.com/Lecturize/Laravel-Tags",
+            "keywords": [
+                "Taggable",
+                "eloquent",
+                "laravel",
+                "model",
+                "tagging",
+                "tags"
+            ],
+            "time": "2017-07-28T17:31:36+00:00"
         },
         {
             "name": "monolog/monolog",

@@ -153,6 +153,8 @@ return [
          */
          //Barryvdh\Debugbar\ServiceProvider::class,
          Laravel\Socialite\SocialiteServiceProvider::class,
+         Cviebrock\EloquentSluggable\ServiceProvider::class,
+         Lecturize\Tags\TagsServiceProvider::class,
 
         /*
          * Application Service Providers...

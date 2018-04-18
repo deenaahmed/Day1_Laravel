@@ -22,6 +22,11 @@
     <h6 class="card-subtitle mb-2 text-muted">Post Title: {{$posts['title']}}</h6>
     <p class="card-text"> Post Description: {{$posts['description']}}</p>
 	<p class="card-text"> Post Creation: {{\Carbon\Carbon::parse($posts->created_at)->format('l  \\of F Y h:i:s A')}}</p>
+@foreach ($tags as $tag)
+    <p>
+    Tags: {{ $tag }} 
+    </p>
+@endforeach
   </div>
 </div>
 <div class="card" style="width: 18rem;">

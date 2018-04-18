@@ -19,6 +19,7 @@ Description :-
 <textarea name="description" value="Post Description"></textarea>
 <br>
 <br>
+Tags: <input type="text" name="tag_body" value="Post Tag">
 Post Creator
 <select class="form-control" name="user_id">
 @foreach ($users as $user)
