@@ -32,7 +32,7 @@
 </form>
 @foreach ($posts->comments as $comment)
     <p>
-        {{ $comment->body }} commented by {{ $comment->user_id }}
+        {{ $comment->body }} commented by {{ $comment->author->name }}
     </p>
 @endforeach
 </div>

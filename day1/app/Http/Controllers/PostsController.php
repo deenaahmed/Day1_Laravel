@@ -40,7 +40,6 @@ class PostsController extends Controller
         $post = Post::find($request->id);
         $body = $request->body; // Get comment provided by user
             $user = Auth::user();             // Get posting user
-            // Create comment
             $post->addComment($body, $user);
             return redirect('/posts/'.$request->id); 
     }
